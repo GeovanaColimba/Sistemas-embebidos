@@ -1,0 +1,33 @@
+# Sistemas-embebidos
+int cont=0;
+const int btn=7;
+const int led1=8;
+const int led2=9;
+const int led3=10;
+const int led4=11;
+const int led5=12;
+const int led6=13;
+const int vector[6]={8,9,10,11,12,13};
+int i;
+void setup() {
+ pinMode(btn, INPUT);
+ for(i=0;i<6;i++){
+    pinMode(vector[i],OUTPUT);
+  }
+}
+
+void loop() { 
+if (digitalRead(btn)==LOW){ // Si presiono el pulsador deberá aumentar la variable
+  cont++;
+  contar(); //llamado de la función 
+  delay(300);
+  
+}
+}
+void contar(){
+  if(cont>64)
+  cont=0;
+  for(i=0;i<6;i++){
+    digitalWrite(vector[i], (cont >> i) & 1);
+  }
+}
