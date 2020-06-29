@@ -1,0 +1,532 @@
+# Sistemas-embebidos
+/*
+ * COLIMBA POZO GEOVANA ELIZABETH 
+ * LABORATORIO 1
+ */
+const int a11 =  9;
+const int a12 =  8;
+const int a13 =  7;
+const int a14 =  6;
+
+const int b21 =  5;
+const int b22 =  4;
+const int b23 =  3;
+const int b24 =  2;
+
+const int c11 =  22;
+const int c12 =  23;
+const int c13 =  24;
+const int c14 =  25;
+
+const int d21 =  26;
+const int d22 =  27;
+const int d23 =  28;
+const int d24 =  29;
+
+const int e31 =  30;
+const int e32 =  31;
+const int e33 =  32;
+const int e34 =  33;
+
+int a = 0; //varaible para las unidades
+int b = 0; //variable para las decenas
+int cont = 0; //contador al momento
+
+int c=0;
+int d=0;
+int e=0;
+int cont2 = 0; //contador al dia
+
+int ciclo1=0;
+int ciclo2=0;
+
+const int buttonPin1 = 10; //sumaba
+const int buttonPin2 = 11;   //restaba
+
+
+int buttonState1 = 0;
+int buttonState2 = 0;
+
+void setup()
+{
+  Serial.begin(9600);
+
+  pinMode(a11, OUTPUT);
+  pinMode(a12, OUTPUT);
+  pinMode(a13, OUTPUT);
+  pinMode(a14, OUTPUT);
+
+  pinMode(b21, OUTPUT);
+  pinMode(b22, OUTPUT);
+  pinMode(b23, OUTPUT);
+  pinMode(b24, OUTPUT);
+
+  pinMode(c11, OUTPUT);
+  pinMode(c12, OUTPUT);
+  pinMode(c13, OUTPUT);
+  pinMode(c14, OUTPUT);
+
+  pinMode(d21, OUTPUT);
+  pinMode(d22, OUTPUT);
+  pinMode(d23, OUTPUT);
+  pinMode(d24, OUTPUT);
+
+  pinMode(e31, OUTPUT);
+  pinMode(e32, OUTPUT);
+  pinMode(e33, OUTPUT);
+  pinMode(e34, OUTPUT);
+
+  pinMode(buttonPin1, INPUT);
+  pinMode(buttonPin2, INPUT);
+}
+
+void digito1()
+{
+  if (a == 0)
+  {
+    digitalWrite(a11, LOW);
+    digitalWrite(a12, LOW);
+    digitalWrite(a13, LOW);
+    digitalWrite(a14, LOW);
+  }
+
+  if (a == 1)
+  {
+    digitalWrite(a11, HIGH);
+    digitalWrite(a12, LOW);
+    digitalWrite(a13, LOW);
+    digitalWrite(a14, LOW);
+  }
+  if (a == 2)
+  {
+    digitalWrite(a11, LOW);
+    digitalWrite(a12, HIGH);
+    digitalWrite(a13, LOW);
+    digitalWrite(a14, LOW);
+  }
+  if (a == 3)
+  {
+    digitalWrite(a11, HIGH);
+    digitalWrite(a12, HIGH);
+    digitalWrite(a13, LOW);
+    digitalWrite(a14, LOW);
+  }
+  if (a == 4)
+  {
+    digitalWrite(a11, LOW);
+    digitalWrite(a12, LOW);
+    digitalWrite(a13, HIGH);
+    digitalWrite(a14, LOW);
+  }
+  if (a == 5)
+  {
+    digitalWrite(a11, HIGH);
+    digitalWrite(a12, LOW);
+    digitalWrite(a13, HIGH);
+    digitalWrite(a14, LOW);
+  }
+  if (a == 6)
+  {
+    digitalWrite(a11, LOW);
+    digitalWrite(a12, HIGH);
+    digitalWrite(a13, HIGH);
+    digitalWrite(a14, LOW);
+  }
+  if (a == 7)
+  {
+    digitalWrite(a11, HIGH);
+    digitalWrite(a12, HIGH);
+    digitalWrite(a13, HIGH);
+    digitalWrite(a14, LOW);
+  }
+  if (a == 8)
+  {
+    digitalWrite(a11, LOW);
+    digitalWrite(a12, LOW);
+    digitalWrite(a13, LOW);
+    digitalWrite(a14, HIGH);
+  }
+  if (a == 9)
+  {
+    digitalWrite(a11, HIGH);
+    digitalWrite(a12, LOW);
+    digitalWrite(a13, LOW);
+    digitalWrite(a14, HIGH);
+  }
+}
+
+void digito2()
+{
+  if (b == 0)
+  {
+    digitalWrite(b21, LOW);
+    digitalWrite(b22, LOW);
+    digitalWrite(b23, LOW);
+    digitalWrite(b24, LOW);
+  }
+
+  if (b == 1)
+  {
+    digitalWrite(b21, HIGH);
+    digitalWrite(b22, LOW);
+    digitalWrite(b23, LOW);
+    digitalWrite(b24, LOW);
+  }
+  if (b == 2)
+  {
+    digitalWrite(b21, LOW);
+    digitalWrite(b22, HIGH);
+    digitalWrite(b23, LOW);
+    digitalWrite(b24, LOW);
+  }
+  if (b == 3)
+  {
+    digitalWrite(b21, HIGH);
+    digitalWrite(b22, HIGH);
+    digitalWrite(b23, LOW);
+    digitalWrite(b24, LOW);
+  }
+  if (b == 4)
+  {
+    digitalWrite(b21, LOW);
+    digitalWrite(b22, LOW);
+    digitalWrite(b23, HIGH);
+    digitalWrite(b24, LOW);
+  }
+  if (b == 5)
+  {
+    digitalWrite(b21, HIGH);
+    digitalWrite(b22, LOW);
+    digitalWrite(b23, HIGH);
+    digitalWrite(b24, LOW);
+  }
+  if (b == 6)
+  {
+    digitalWrite(b21, LOW);
+    digitalWrite(b22, HIGH);
+    digitalWrite(b23, HIGH);
+    digitalWrite(b24, LOW);
+  }
+  if (b == 7)
+  {
+    digitalWrite(b21, HIGH);
+    digitalWrite(b22, HIGH);
+    digitalWrite(b23, HIGH);
+    digitalWrite(b24, LOW);
+  }
+  if (b == 8)
+  {
+    digitalWrite(b21, LOW);
+    digitalWrite(b22, LOW);
+    digitalWrite(b23, LOW);
+    digitalWrite(b24, HIGH);
+  }
+  if (b == 9)
+  {
+    digitalWrite(b21, HIGH);
+    digitalWrite(b22, LOW);
+    digitalWrite(b23, LOW);
+    digitalWrite(b24, HIGH);
+  }
+}
+
+void digito3()
+{
+  if ( c== 0)
+  {
+    digitalWrite(c11, LOW);
+    digitalWrite(c12, LOW);
+    digitalWrite(c13, LOW);
+    digitalWrite(c14, LOW);
+  }
+
+  if (c == 1)
+  {
+    digitalWrite(c11, HIGH);
+    digitalWrite(c12, LOW);
+    digitalWrite(c13, LOW);
+    digitalWrite(c14, LOW);
+  }
+  if (c == 2)
+  {
+    digitalWrite(c11, LOW);
+    digitalWrite(c12, HIGH);
+    digitalWrite(c13, LOW);
+    digitalWrite(c14, LOW);
+  }
+  if (c == 3)
+  {
+    digitalWrite(c11, HIGH);
+    digitalWrite(c12, HIGH);
+    digitalWrite(c13, LOW);
+    digitalWrite(c14, LOW);
+  }
+  if (c == 4)
+  {
+    digitalWrite(c11, LOW);
+    digitalWrite(c12, LOW);
+    digitalWrite(c13, HIGH);
+    digitalWrite(c14, LOW);
+  }
+  if (c == 5)
+  {
+    digitalWrite(c11, HIGH);
+    digitalWrite(c12, LOW);
+    digitalWrite(c13, HIGH);
+    digitalWrite(c14, LOW);
+  }
+  if (c == 6)
+  {
+    digitalWrite(c11, LOW);
+    digitalWrite(c12, HIGH);
+    digitalWrite(c13, HIGH);
+    digitalWrite(c14, LOW);
+  }
+  if (c == 7)
+  {
+    digitalWrite(c11, HIGH);
+    digitalWrite(c12, HIGH);
+    digitalWrite(c13, HIGH);
+    digitalWrite(c14, LOW);
+  }
+  if (c == 8)
+  {
+    digitalWrite(c11, LOW);
+    digitalWrite(c12, LOW);
+    digitalWrite(c13, LOW);
+    digitalWrite(c14, HIGH);
+  }
+  if (c == 9)
+  {
+    digitalWrite(c11, HIGH);
+    digitalWrite(c12, LOW);
+    digitalWrite(c13, LOW);
+    digitalWrite(c14, HIGH);
+  }
+}
+
+void digito4()
+{
+  if (d == 0)
+  {
+    digitalWrite(d21, LOW);
+    digitalWrite(d22, LOW);
+    digitalWrite(d23, LOW);
+    digitalWrite(d24, LOW);
+  }
+
+  if (d == 1)
+  {
+    digitalWrite(d21, HIGH);
+    digitalWrite(d22, LOW);
+    digitalWrite(d23, LOW);
+    digitalWrite(d24, LOW);
+  }
+  if (d == 2)
+  {
+    digitalWrite(d21, LOW);
+    digitalWrite(d22, HIGH);
+    digitalWrite(d23, LOW);
+    digitalWrite(d24, LOW);
+  }
+  if (d == 3)
+  {
+    digitalWrite(d21, HIGH);
+    digitalWrite(d22, HIGH);
+    digitalWrite(d23, LOW);
+    digitalWrite(d24, LOW);
+  }
+  if (d == 4)
+  {
+    digitalWrite(d21, LOW);
+    digitalWrite(d22, LOW);
+    digitalWrite(d23, HIGH);
+    digitalWrite(d24, LOW);
+  }
+  if (d == 5)
+  {
+    digitalWrite(d21, HIGH);
+    digitalWrite(d22, LOW);
+    digitalWrite(d23, HIGH);
+    digitalWrite(d24, LOW);
+  }
+  if (d == 6)
+  {
+    digitalWrite(d21, LOW);
+    digitalWrite(d22, HIGH);
+    digitalWrite(d23, HIGH);
+    digitalWrite(d24, LOW);
+  }
+  if (d == 7)
+  {
+    digitalWrite(d21, HIGH);
+    digitalWrite(d22, HIGH);
+    digitalWrite(d23, HIGH);
+    digitalWrite(d24, LOW);
+  }
+  if (d == 8)
+  {
+    digitalWrite(d21, LOW);
+    digitalWrite(d22, LOW);
+    digitalWrite(d23, LOW);
+    digitalWrite(d24, HIGH);
+  }
+  if (d == 9)
+  {
+    digitalWrite(d21, HIGH);
+    digitalWrite(d22, LOW);
+    digitalWrite(d23, LOW);
+    digitalWrite(d24, HIGH);
+  }
+}
+
+void digito5()
+{
+  if (e == 0)
+  {
+    digitalWrite(e31, LOW);
+    digitalWrite(e32, LOW);
+    digitalWrite(e33, LOW);
+    digitalWrite(e34, LOW);
+  }
+
+  if (e == 1)
+  {
+    digitalWrite(e31, HIGH);
+    digitalWrite(e32, LOW);
+    digitalWrite(e33, LOW);
+    digitalWrite(e34, LOW);
+  }
+  if (e == 2)
+  {
+    digitalWrite(e31, LOW);
+    digitalWrite(e32, HIGH);
+    digitalWrite(e33, LOW);
+    digitalWrite(e34, LOW);
+  }
+  if (e == 3)
+  {
+    digitalWrite(e31, HIGH);
+    digitalWrite(e32, HIGH);
+    digitalWrite(e33, LOW);
+    digitalWrite(e34, LOW);
+  }
+  if (e == 4)
+  {
+    digitalWrite(e31, LOW);
+    digitalWrite(e32, LOW);
+    digitalWrite(e33, HIGH);
+    digitalWrite(e34, LOW);
+  }
+  if (e == 5)
+  {
+    digitalWrite(e31, HIGH);
+    digitalWrite(e32, LOW);
+    digitalWrite(e33, HIGH);
+    digitalWrite(e34, LOW);
+  }
+  if (e == 6)
+  {
+    digitalWrite(e31, LOW);
+    digitalWrite(e32, HIGH);
+    digitalWrite(e33, HIGH);
+    digitalWrite(e34, LOW);
+  }
+  if (e == 7)
+  {
+    digitalWrite(e31, HIGH);
+    digitalWrite(e32, HIGH);
+    digitalWrite(e33, HIGH);
+    digitalWrite(e34, LOW);
+  }
+  if (e == 8)
+  {
+    digitalWrite(e31, LOW);
+    digitalWrite(e32, LOW);
+    digitalWrite(e33, LOW);
+    digitalWrite(e34, HIGH);
+  }
+  if (e == 9)
+  {
+    digitalWrite(e31, HIGH);
+    digitalWrite(e32, LOW);
+    digitalWrite(e33, LOW);
+    digitalWrite(e34, HIGH);
+  }
+}
+
+void loop()
+{
+  buttonState1 = digitalRead(buttonPin1);
+  buttonState2 = digitalRead(buttonPin2);
+
+  if (buttonState1 == HIGH)
+    {
+      ciclo1=1;
+    }
+
+   if (buttonState2 == HIGH)
+    {
+      ciclo2=1;
+    }
+
+  while (ciclo1 > 0)
+  {
+    buttonState2 = digitalRead(buttonPin2);
+    if (buttonState2 == HIGH)
+    {
+      ciclo2=1;
+    }  
+    if (ciclo2 > 0)
+    {
+      cont = cont + 1;
+      cont2 = cont2+1;
+      delay(500);
+      ciclo1 = 0;
+      ciclo2 = 0;
+    }
+  }
+
+  while (ciclo2 > 0)
+  {
+    
+    buttonState1 = digitalRead(buttonPin1);
+    if (buttonState1 == HIGH)
+    {
+      ciclo1=1;
+    }
+    
+    if (ciclo1 > 0)
+    {
+      cont = cont - 1;
+      delay(500);
+      ciclo1 = 0;
+      ciclo2 = 0;
+    }
+  }
+  
+
+  b = cont / 10;
+  a = cont - (b * 10);
+  
+  c=cont2/100;
+  d=(cont2-c)/10;
+  e=cont2-(d*10)-(c*100);
+
+
+  if (cont < 0)
+  {
+    cont = 0;
+  }
+  if (cont > 30)
+  {
+    cont = 0;
+  }
+
+  digito1();
+  digito2();
+  digito3();
+  digito4();
+  digito5();
+  
+}
