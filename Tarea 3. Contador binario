@@ -1,4 +1,8 @@
 # Sistemas-embebidos
+/*
+ * CONTADOR BINARIO 6 BITS
+ * COLIMBA POZO GEOVANA ELIZABETH
+ */
 int cont=0;
 const int btn=7;
 const int led1=8;
