@@ -1,0 +1,122 @@
+# Sistemas-embebidos
+/*
+ * CAPITULO II: PUERTOS DIGITALES
+ * CCDIGO: MANEJO DE DISPLAY 7 SEGMENTOS
+ * TAREA 4  
+ * COLIMBA POZO GEOVANA ELIZABETH
+ */
+const int D=11; //más significativo
+const int C=10;
+const int B=9;
+const int A=8; // bit menos msignificativo
+const int btn=7;
+int cont=0;
+int decenas=13;
+int unidades=12;
+int dec;
+int uni;
+int i;
+
+void setup() {
+  pinMode(D,OUTPUT);
+  pinMode(C,OUTPUT);
+  pinMode(B,OUTPUT);
+  pinMode(A,OUTPUT);
+  pinMode(decenas,OUTPUT);
+  pinMode(unidades,OUTPUT);
+  pinMode(btn,INPUT);
+}
+
+void loop() {
+if (digitalRead (btn)==LOW){
+  delay(200);
+  for(cont=2;cont<100;cont++){
+        bool primo = true;
+            for (i=2; i<cont; i++){
+              if (cont%i == 0){
+                primo = false;
+            }
+        }if(primo){
+            dec=cont/10; //15/10=1.5
+            uni=cont-(dec*10);//15-10=5//5-0=5       
+    }
+ 
+      digitalWrite(decenas,HIGH);
+      digitalWrite(unidades,LOW);
+      //Imprimir valor de decenas
+      segmentos(dec);
+      delay(200);
+      digitalWrite(decenas,LOW);
+      digitalWrite(unidades,HIGH);
+      //imprimir valor de unidades
+      segmentos(uni);
+      delay(200);
+    }
+  }
+}
+
+void segmentos(int i){
+  switch(i){
+    case 0:
+          digitalWrite(D,LOW); //Envía 0 voltios a pin 8
+          digitalWrite(C,LOW); //Envía 0 voltios a pin 9
+          digitalWrite(B,LOW); //Envía 0 voltios a pin 10
+          digitalWrite(A,LOW); //Envía 0 voltios a pin 11
+        break;
+        case 1:
+          digitalWrite(D,HIGH); //Envía 5 voltios a pin 8
+          digitalWrite(C,LOW);  //Envía 0 voltios a pin 9
+          digitalWrite(B,LOW);  //Envía 0 voltios a pin 10
+          digitalWrite(A,LOW);  //Envía 0 voltios a pin 11
+        break;
+        case 2:
+          digitalWrite(D,LOW);  //Envía 0 voltios a pin 8
+          digitalWrite(C,HIGH); //Envía 5 voltios a pin 9
+          digitalWrite(B,LOW);  //Envía 0 voltios a pin 10
+          digitalWrite(A,LOW);  //Envía 0 voltios a pin 11
+        break;
+        case 3:
+          digitalWrite(D,HIGH); //Envía 5 voltios a pin 8
+          digitalWrite(C,HIGH); //Envía 5 voltios a pin 9
+          digitalWrite(B,LOW);  //Envía 0 voltios a pin 10
+          digitalWrite(A,LOW);  //Envía 0 voltios a pin 11
+        break;
+        case 4:
+          digitalWrite(D,LOW);  //Envía 0 voltios a pin 8
+          digitalWrite(C,LOW);  //Envía 0 voltios a pin 9
+          digitalWrite(B,HIGH); //Envía 5 voltios a pin 10
+          digitalWrite(A,LOW);  //Envía 0 voltios a pin 11
+        break;
+        case 5:
+          digitalWrite(D,HIGH); //Envía 5 voltios a pin 8
+          digitalWrite(C,LOW);  //Envía 0 voltios a pin 9
+          digitalWrite(B,HIGH); //Envía 5 voltios a pin 10
+          digitalWrite(A,LOW);  //Envía 0 voltios a pin 11
+        break;
+        case 6:
+          digitalWrite(D,LOW);  //Envía 0 voltios a pin 8
+          digitalWrite(C,HIGH); //Envía 5 voltios a pin 9
+          digitalWrite(B,HIGH); //Envía 5 voltios a pin 10
+          digitalWrite(A,LOW);  //Envía 0 voltios a pin 11
+        break;
+        case 7:
+          digitalWrite(D,HIGH); //Envía 5 voltios a pin 8
+          digitalWrite(C,HIGH); //Envía 5 voltios a pin 9
+          digitalWrite(B,HIGH); //Envía 5 voltios a pin 10
+          digitalWrite(A,LOW);  //Envía 0 voltios a pin 11
+        break;
+        case 8:
+          digitalWrite(D,LOW); //Envía 0 voltios a pin 8
+          digitalWrite(C,LOW); //Envía 0 voltios a pin 9
+          digitalWrite(B,LOW); //Envía 0 voltios a pin 10
+          digitalWrite(A,HIGH); //Envía 5 voltios a pin 11
+        break;
+        case 9:
+          digitalWrite(D,HIGH); //Envía 5 voltios a pin 8
+          digitalWrite(C,LOW);  //Envía 0 voltios a pin 9
+          digitalWrite(B,LOW);  //Envía 0 voltios a pin 10
+          digitalWrite(A,HIGH); //Envía 5 voltios a pin 11
+        break;
+        
+  }
+}
