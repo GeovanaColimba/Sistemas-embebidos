@@ -1,0 +1,27 @@
+# Sistemas-embebidos
+/*
+ * CAPÍTULO II: PUERTOS DIGITALES - LCD
+ * COLIMBA POZO GEOVANA ELIZABETH
+ * TAREA 5 
+ */ 
+ 
+#include <LiquidCrystal.h>
+const int btn=7;
+LiquidCrystal lcd {13,12,11,10,9,8}; // RS,E,D4,D5,D6,D7
+int pulso;
+void setup() {
+  lcd.setCursor(0,0);
+  lcd.begin(16,2);
+  pinMode(btn,INPUT);
+  lcd.print("ARDUINO"); //texto=ARDUINO
+}
+
+void loop() {
+  if (digitalRead(btn)==LOW){
+    pulso=1;
+  }  
+  if(digitalRead (btn)== HIGH && pulso ==1){
+    lcd.scrollDisplayRight();
+    delay(100);
+  }
+}
