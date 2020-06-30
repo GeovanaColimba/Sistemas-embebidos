@@ -1,5 +1,5 @@
 # Sistemas-embebidos
-/*
+ /*
  * CAPITULO II: PUERTOS DIGITALES
  * CCDIGO: MANEJO DE DISPLAY 7 SEGMENTOS
  * TAREA 4  
@@ -10,12 +10,13 @@ const int C=10;
 const int B=9;
 const int A=8; // bit menos msignificativo
 const int btn=7;
-int cont=0;
+int cont;
 int decenas=13;
 int unidades=12;
 int dec;
 int uni;
 int i;
+bool p;
 
 void setup() {
   pinMode(D,OUTPUT);
@@ -31,17 +32,15 @@ void loop() {
 if (digitalRead (btn)==LOW){
   delay(200);
   for(cont=2;cont<100;cont++){
-        bool primo = true;
+            p = true;
             for (i=2; i<cont; i++){
               if (cont%i == 0){
-                primo = false;
-            }
-        }if(primo){
-            dec=cont/10; //15/10=1.5
-            uni=cont-(dec*10);//15-10=5//5-0=5       
-    }
- 
-      digitalWrite(decenas,HIGH);
+                p = false;}
+        }if(p){
+            dec=cont/10; //determinar valor de decenas 
+            uni=cont-(dec*10);//determinar valor de unidades
+                  
+    } digitalWrite(decenas,HIGH);
       digitalWrite(unidades,LOW);
       //Imprimir valor de decenas
       segmentos(dec);
