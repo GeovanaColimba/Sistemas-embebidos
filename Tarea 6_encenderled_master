@@ -1,0 +1,58 @@
+# Sistemas-embebidos
+/*////////////////////////////////////////MASTER/////////////////////////////
+ * DEBER 6: Realizar un programa donde el sistema máster tenga 4 switchs, al activarlos, 
+ * envíe un mensaje por comunicación i2c al esclavo y encienda un led por cada switch. 
+ * COLIMBA POZO GEOVANA ELIZABETH
+ */
+#include <Wire.h>  //libreria i2c
+const int bt1=8;  //led 1 en el pin 8
+const int bt2=9; //led 2 en el pin 9
+const int bt3=10;//led 3 en el pin 10
+const int bt4=11; //led 4 en el pin 11
+int estado1;
+int estado2;
+int estado3;
+int estado4;
+void setup() {
+  Wire.begin();  //inicia cx i2c
+  Serial.begin(9600);  //inicia cx serial
+  pinMode(bt1,INPUT); //pin 8 como entrada
+  pinMode(bt2,INPUT);//pin 9 como entrada
+  pinMode(bt3,INPUT); //pin 10 como entrada
+  pinMode(bt4,INPUT);//pin 11 como entrada
+
+}
+
+void loop() {
+
+    Wire.beginTransmission(4); //empieza cx i2c
+   // Wire.write(estado); //envia dato 
+   // Wire.endTransmission();  // termina cx i2c
+
+    estado1=digitalRead(bt1);
+    estado2=digitalRead(bt2);
+    estado3=digitalRead(bt3);
+    estado4=digitalRead(bt4);
+    if(estado1==LOW){
+      Wire.write('a');
+      Serial.println("Enviando accion switch 1");
+      Wire.endTransmission();  // termina cx i2c
+    }
+     if(estado2==LOW){
+      Wire.write('b');
+      Serial.println("Enviando accion switch 2");
+      Wire.endTransmission();  // termina cx i2c
+    }
+     if(estado3==LOW){
+      Wire.write('c');
+      Serial.println("Enviando acci0n switch 3");
+      Wire.endTransmission();  // termina cx i2c
+    }
+     if(estado4==LOW){
+      Wire.write('d');
+      Serial.println("Enviando accion switch 4");
+      Wire.endTransmission();  // termina cx i2c
+    }
+    
+    delay(100);
+  }
