@@ -1,0 +1,122 @@
+# Sistemas-embebidos
+/*
+ * CAPÍTULO III: MÓDULOS DE COMUNICACIÓN I2C
+ * LABORATORIO II
+ * COLIMBA POZO GEOVANA ELIZABETH 
+ */
+String recibe; //recibir
+String vector;
+int tam; //sirve para almacenar el tamaño o número de vocales a codificar
+int i=0; // variable de recorrido de vector
+String txs; //variable de mensaje de codificación final
+int j=0; //variable de confirmación de recpción de vocales.
+char dato;
+#include <Wire.h>
+#include <LiquidCrystal.h>
+LiquidCrystal lcd {13,12,11,10,9,8}; // RS,E,D4,D5,D6,D7
+void setup() {
+  Wire.begin(4);
+  Serial.begin(9600);
+  lcd.begin(16,2);
+  Wire.onReceive(receiveEvent); 
+
+}
+
+void loop() {
+  
+         
+}//end void loop
+
+void receiveEvent(int bytes){
+    while(Wire.available()){
+          char dato=Wire.read(); //Lee un byte que ha sido transmitido desde un dispositivo esclavo a un maestro
+             recibe=recibe+dato;
+              switch(recibe[i]){
+                case 'a':
+                    txs=txs+"00001";
+                break;
+                case 'b':
+                    txs=txs+"00010";
+                break;
+                case 'c':
+                    txs=txs+"00011";
+                break;
+                case 'd':
+                    txs=txs+"00100";
+                break;
+                case 'e':
+                    txs=txs+"00101";
+                break;
+                case 'f':
+                    txs=txs+"00110";
+                break;
+                case 'g':
+                    txs=txs+"00111";
+                break;
+                case 'h':
+                    txs=txs+"01000";
+                break;
+                case 'i':
+                    txs=txs+"01001";
+                break;
+                case 'j':
+                    txs=txs+"01010";
+                break;
+                case 'k':
+                    txs=txs+"01011";
+                break;
+                case 'l':
+                    txs=txs+"01100";
+                break;
+                case 'm':
+                    txs=txs+"01101";
+                break;
+                case 'n':
+                    txs=txs+"01110";
+                break;
+                case 'o':
+                    txs=txs+"10000";
+                break;
+                case 'p':
+                    txs=txs+"10001";
+                break;
+                case 'q':
+                    txs=txs+"10010";
+                break;
+                case 'r':
+                    txs=txs+"10011";
+                break;
+                case 's':
+                    txs=txs+"10100";
+                break;
+                case 't':
+                    txs=txs+"10101";
+                break;
+                case 'u':
+                    txs=txs+"10110";
+                break;
+                case 'v':
+                    txs=txs+"10111";
+                break;
+                case 'w':
+                    txs=txs+"11000";
+                break;
+                case 'x':
+                    txs=txs+"11001";
+                break;
+                case 'y':
+                    txs=txs+"11010";
+                break;
+                case 'z':
+                    txs=txs+"11011";
+                break;
+              }
+             
+            
+            Serial.println(txs);
+            txs="";
+            lcd.print(recibe);
+            lcd.setCursor(0,0);
+         
+    }
+   }
