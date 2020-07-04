@@ -1,0 +1,27 @@
+# Sistemas-embebidos
+/*
+ * 
+ * LABORATORIO II
+ * COLIMBA POZO GEOVANA ELIZABETH
+ * 
+ */
+#include <Wire.h>  //libreria i2c
+char dato;  // variable de almacenamiento de datos
+void setup() {
+  Wire.begin();  //inicia cx i2c
+  Serial.begin(9600);  //inicia cx serial
+  
+
+}
+
+void loop() {
+   if(Serial.available()>0){ //verifica el puerto de cx
+    dato=Serial.read();   //almacena el dato en variable
+    Wire.beginTransmission(4); //empieza cx i2c
+    Wire.write(dato); //envia dato 
+    Wire.endTransmission();  // termina cx i2c
+  }
+}//end void loop
+
+ 
+ 
