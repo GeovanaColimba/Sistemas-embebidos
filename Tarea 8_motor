@@ -1,0 +1,65 @@
+# Sistemas-embebidos
+/*
+ * TAREA 8
+ * COLIMBA POZO GEOVANA ELIZABETH
+ */
+
+#include <LiquidCrystal.h>
+LiquidCrystal lcd {13,12,11,10,9,8};
+int conversor; //adquirir los datos 
+const int motor=6;
+char dato;
+char dato1;
+int minimo;
+int maximo;
+int giro;
+int dutty;
+
+
+void setup() {
+  Serial.begin(9600);
+  lcd.begin(16,2);
+  Serial.println("Ingrese valor numerico de giro minimo");
+  Serial.println("Ingrese valor numerico de giro maximo");
+}
+
+void loop() {
+  conversor=analogRead(0);
+  //delay(20);
+  while(!Serial.available()>0);   // condición de recepción de datos
+  dato = Serial.parseInt();
+  minimo = dato ;
+  //dato=Serial.readString();
+  //minimo=dato.toInt();
+  
+  while(!Serial.available()>0);       // condición de recepción de datos
+  dato1 = Serial.parseInt();
+  maximo = dato1 ;
+  //dato1=Serial.readString();
+  //maximo=dato1.toInt();
+  
+  if ((minimo && maximo)<1023){
+   conversor=map(conversor,0,1023,minimo,maximo);
+  }
+  else{
+    Serial.println("Dato incorrecto: ");
+    delay(2000);
+  }
+    lcd.setCursor(0,0);
+    lcd.print("Vi:");
+    lcd.setCursor(3,0);
+    lcd.print(minimo);
+    lcd.setCursor(8,0);
+    lcd.print("Vo:");
+    lcd.setCursor(11,0);
+    lcd.print(maximo);
+    dutty=conversor/4;
+    analogWrite(motor,dutty);
+    lcd.setCursor(0,1);
+    lcd.print("V: ");
+    lcd.setCursor(3,1);
+    lcd.print(dutty);
+    delay(5000);
+    lcd.clear();
+    
+  }
