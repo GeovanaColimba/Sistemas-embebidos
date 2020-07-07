@@ -13,7 +13,7 @@ char dato1;
 int minimo;
 int maximo;
 int giro;
-int dutty;
+float v;
 
 
 void setup() {
@@ -40,6 +40,7 @@ void loop() {
   
   if ((minimo && maximo)<1023){
    conversor=map(conversor,0,1023,minimo,maximo);
+   v=(conversor*5.0)/255; 
   }
   else{
     Serial.println("Dato incorrecto: ");
@@ -53,13 +54,12 @@ void loop() {
     lcd.print("Vo:");
     lcd.setCursor(11,0);
     lcd.print(maximo);
-    dutty=conversor/4;
-    analogWrite(motor,dutty);
     lcd.setCursor(0,1);
     lcd.print("V: ");
     lcd.setCursor(3,1);
-    lcd.print(dutty);
+    lcd.print(v);
     delay(5000);
     lcd.clear();
     
   }
+
