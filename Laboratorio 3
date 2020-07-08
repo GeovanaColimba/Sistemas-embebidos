@@ -1,0 +1,98 @@
+# Sistemas-embebidos
+/*
+ * LABORATORIO III
+ * COLIMBA POZO GEOVANA ELIZABETH 
+ */
+#include <LiquidCrystal.h>
+#include <TimerOne.h>
+#include <MsTimer2.h>
+LiquidCrystal lcd {13,12,11,10,9,8};
+int on=0;
+int on1=0;
+int leds;
+const int led1=7;
+const int led2=6;
+const int led3=5;
+const int led4=4;
+int cont; // int1
+int reloj;
+int i; //variables de conteo
+int j;  //variables de conteo
+int minuto;
+int conversor1;
+int conversor2;
+void setup() {
+  lcd.begin(16,2);
+  pinMode(led1,OUTPUT);
+  pinMode(led2,OUTPUT);
+  pinMode(led3,OUTPUT);
+  pinMode(led4,OUTPUT);
+  Timer1.initialize(1000000);//1seg
+  Timer1.attachInterrupt(hora);
+  attachInterrupt(digitalPinToInterrupt(2),activacion,LOW); // interrupt 0 habilitada
+  attachInterrupt(digitalPinToInterrupt(3),activacion1,LOW);  // interrupt 1 habilitada
+
+  Serial.begin(9600);
+}
+
+void loop() {
+    if(on==1){  
+    leds=random(0,4);
+     for(i=0;i<leds;i++){
+       j=i+4;
+       digitalWrite(i,HIGH);
+     }
+     delay(200);
+     j=0;
+     for(i=0;i<leds;i++){
+        j=i+4;
+        digitalWrite(j,LOW);
+     }
+ }
+}
+
+void activacion(){
+  switch(on){
+    case 0:
+      Serial.println("Juego de luces encendido");
+      on++;
+    break;
+    case 1:
+      Serial.println("Juego de luces apagado");
+      on=0;
+    break;
+  }
+}
+void activacion1(){
+  switch(on1){
+    case 0:
+      on1++;
+    break;
+    case 1:
+      on1=1-on1;
+    break;
+  }
+}
+void hora(){
+reloj++;
+ if(reloj>59){
+  reloj=0;
+  minuto++;
+ }
+ lcd.setCursor(0,1);
+ lcd.println("Hora ");
+ if(minuto<10)
+ lcd.setCursor(6,1);
+ lcd.println("0");
+ lcd.setCursor(7,1);
+ lcd.println(minuto);
+ lcd.setCursor(8,1);
+ lcd.println(":");
+ if(reloj<10){
+  lcd.setCursor(9,1);
+  lcd.println("0");
+ }
+ lcd.setCursor(10,1);
+ lcd.println(reloj);
+  
+}
