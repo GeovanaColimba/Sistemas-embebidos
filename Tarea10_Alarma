@@ -1,0 +1,152 @@
+# Sistemas-embebidos
+/*
+  * TAREA 10
+  * COLIMBA POZO GEOVANA ELIZABETH 
+  * */
+ 
+#include <LiquidCrystal.h>
+#include <TimerOne.h>
+#include <MsTimer2.h>
+LiquidCrystal lcd {13,12,11,10,9,8};
+int on=0;
+int on1=0;
+const int bzr=6;
+int reloj2;
+int horero;
+int minutero;
+int cont; // int1
+int reloj;
+int a; //variables de conteo
+int b;  //variables de conteo
+int minuto;
+volatile byte state = LOW;
+int conversor1;
+int conversor2;
+int segundos=0; //Minutos
+int minutos=0; //Horas
+ 
+void setup() {
+  lcd.begin(16,2);
+  Timer1.initialize(1000000);//1seg
+  Timer1.attachInterrupt(hora);
+  attachInterrupt(digitalPinToInterrupt(2),activacion,LOW); // interrupt 0 habilitada
+  attachInterrupt(digitalPinToInterrupt(3),configuraralarma,LOW);  // interrupt 1 habilitada
+  MsTimer2::set(1000,mostraralarma);
+  MsTimer2::start();
+  Serial.begin(9600);
+}
+
+void loop() {
+ }
+void configuraralarma(){
+ switch(on1){
+    case 0:
+     Serial.println("Configurar alarma");
+     on1++;
+     break;
+     case 1:
+     Serial.println("Alarma configurada");
+     on1=0;
+     break; 
+}
+
+}
+void activacion(){
+ switch(on){
+    case 0:
+    Serial.println("Configurar reloj");
+      on++;
+     break;
+     case 1:
+    Serial.println("Reloj configurado"); 
+     on=0;
+     on1=0;
+     break;
+}
+}
+void hora(){
+reloj++;
+ if(reloj>59){
+  reloj=0;
+  minuto++;
+ }
+ if(on==0){
+ lcd.setCursor(0,0);
+ lcd.println("Hora");
+ if(minuto<10)
+ lcd.setCursor(6,0);
+ lcd.println("0");
+ lcd.setCursor(7,0);
+ lcd.println(minuto);
+ lcd.setCursor(8,0);
+ lcd.println(":");
+ if(reloj<10){
+  lcd.setCursor(9,0);
+  lcd.println("0");
+ }
+ lcd.setCursor(10,0);
+ lcd.println(reloj);
+  
+}
+else if(on==1){
+    lcd.clear();
+    conversor1=analogRead(0);
+    conversor2=analogRead(1);
+    lcd.setCursor(0,0);
+    lcd.print("Hora:");
+    lcd.setCursor(7,0);
+    horero=map(conversor1, 0, 1023, 0, 24);
+    minuto=horero;
+    lcd.println(minuto);
+    lcd.setCursor(9,0);
+    lcd.println(":");
+    minutero=map(conversor2, 0, 1023, 0,60);
+    lcd.setCursor(10,0);
+    reloj=minutero;
+    lcd.println(reloj);
+
+}
+}
+void mostraralarma(){
+reloj++;
+ if(reloj>59){
+  reloj=0;
+  minuto++;
+ }
+ if(on1==0){
+  lcd.setCursor(0,1);
+ lcd.println("Alarma");
+ if(minuto<10)
+ lcd.setCursor(7,1);
+ lcd.println("0");
+ lcd.setCursor(8,1);
+ lcd.println(minuto);
+ lcd.setCursor(9,1);
+ lcd.println(":");
+ if(reloj<10){
+  lcd.setCursor(10,1);
+  lcd.println("0");
+ }
+ lcd.setCursor(11,1);
+ lcd.println(reloj);
+  
+}
+else if(on1==1){
+    lcd.clear();
+    conversor1=analogRead(0);
+    conversor2=analogRead(1);
+    lcd.setCursor(0,1);
+    lcd.print("Alarma");
+    lcd.setCursor(7,1);
+    horero=map(conversor1, 0, 1023, 0, 24);
+    minuto=horero;
+    lcd.println(minuto);
+    lcd.setCursor(9,1);
+    lcd.println(":");
+    minutero=map(conversor2, 0, 1023, 0,60);
+    lcd.setCursor(10,1);
+    reloj=minutero;
+    lcd.println(reloj);
+
+}
+}
