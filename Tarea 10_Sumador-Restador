@@ -1,0 +1,65 @@
+# Sistemas-embebidos
+/*
+ * TAREA 9
+ * COLIMBA POZO GEOVANA ELIZABETH
+ */
+int numero1;
+int numero2; 
+int sum;
+int res;
+int dato;
+String num1;
+String num2;
+int on;
+int on1;
+void setup() {
+  Serial.begin(9600);
+  attachInterrupt(0,sumar,LOW); // interrupt 0 habilitada
+  attachInterrupt(1,restar,LOW);  // interrupt 1 habilitada
+  Serial.println("Ingrese el primer numero");
+}
+void loop() {
+  if (dato == 0) {
+        if (Serial.available() > 0) {
+         num1= Serial.readString();
+         numero1 = num1.toInt(); //convetir un dato tipo String en int
+         Serial.println("");
+         dato++;
+         Serial.println("Ingrese el segundo numero");
+        }  
+    }
+    if (dato == 1) {
+        if (Serial.available() > 0) {
+         num1 = Serial.readString();
+         numero2 = num1.toInt();
+         Serial.println("");
+         dato++;
+        }  
+    }
+}
+ void sumar(){
+  switch(on){ // opciones de boton 
+      case 0:
+      sum = numero1+numero2;
+      Serial.println("Suma");
+      Serial.println(sum);
+      on++;
+      break;
+      case 1:
+        on=0;
+      break;
+    }
+}
+void restar(){
+   switch(on1){ // opciones de boton 
+      case 0:
+      res=numero1-numero2;
+      Serial.println("Resta");
+      Serial.println(res);
+      on1++;
+      break;
+      case 1:
+        on1=0;
+      break;
+    } 
+}
