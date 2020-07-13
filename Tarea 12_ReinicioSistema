@@ -1,0 +1,56 @@
+# Sistemas-embebidos
+/*
+ * TAREA 12: Realizar un programa que se reinicie el sistema cada 28 segundos.
+ * COLIMBA POZO GEOVANA ELIZABETH 
+ */
+#include <avr/wdt.h>
+#include <LiquidCrystal.h>
+#include <TimerOne.h>
+LiquidCrystal lcd={13,12,11,10,9,8};
+int reloj;
+int minuto;
+int periodo=28000; // 28 segundos
+int i;
+unsigned long tiempoahora=0; //retorno
+void setup(){
+   lcd.begin(16,2);
+   Timer1.initialize(1000000);
+   Timer1.attachInterrupt(hora);
+   Serial.begin(9600);
+}
+void loop(){
+  Serial.println(i++); 
+  delay(300);
+  if(millis()>tiempoahora+periodo){
+    tiempoahora=millis();
+    lcd.setCursor(5,1);
+    wdt_disable();
+    wdt_enable(WDTO_120MS);
+    lcd.setCursor(3,1);
+    lcd.print("Reiniciando");
+  }
+}
+
+void hora(){
+reloj++;
+ if(reloj>59){
+  reloj=0;
+  minuto++;
+ }
+ lcd.setCursor(0,0);
+ lcd.println("Conteo");
+ if(minuto<10)
+ lcd.setCursor(7,0);
+ lcd.println("0");
+ lcd.setCursor(8,0);
+ lcd.println(minuto);
+ lcd.setCursor(9,0);
+ lcd.println(":");
+ if(reloj<10){
+  lcd.setCursor(10,0);
+  lcd.println("0");
+ }
+ lcd.setCursor(11,0);
+ lcd.println(reloj);
+  
+}
