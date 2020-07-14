@@ -1,0 +1,165 @@
+
+/*
+ * LABORATORIO 4: SISTEMA DE SEGURIDAD DOMICILIARIA
+ * COLIMBA POZO GEOVANA ELIZABETH
+ */
+#include <avr/power.h>
+#include <avr/sleep.h>
+#include <avr/wdt.h>
+#include <MsTimer2.h>
+#include <EEPROM.h>
+#include <TimerOne.h>
+#include <LiquidCrystal.h>
+LiquidCrystal lcd (13,12,11,10,9,8);
+int dato, on, i,h,j,cont, minutos,hora;
+String entrada;
+const int led1=22;
+const int led2=23;
+const int led3=24;
+const int sensor1=7;
+float modulo;
+const int sensor2=6;
+const int sensor3=5;
+unsigned long tiempo=0;
+int periodo=1100;
+int minu,rel;
+void setup() {
+  lcd.begin(16,2);
+  Serial.begin(9600);
+  pinMode(led1,OUTPUT);
+  pinMode(led2,OUTPUT);
+  pinMode(led3,OUTPUT);
+  pinMode(sensor1,OUTPUT);
+  pinMode(sensor2,OUTPUT);
+  pinMode(sensor3,OUTPUT);
+  
+  EEPROM.write(0,0);
+  EEPROM.write(1,0);
+  minutos=EEPROM.read(0);
+  hora=EEPROM.read(1);
+  Timer1.initialize(1000000);//1seg
+  Timer1.attachInterrupt(reloj);  
+  set_sleep_mode(SLEEP_MODE_STANDBY);
+  attachInterrupt(0,activacion,LOW);
+  MsTimer2::set(1000,encender);
+  
+  sleep_enable();
+  sleep_mode();
+}
+
+void loop() {
+
+ sleep_disable();
+ if(on==1){
+ if(Serial.available()>0){
+    entrada=Serial.readString();   
+    if(entrada=="123L"){
+        Serial.println(" Clave Correcta");
+        Serial.println("El sistema se activara en 20 segundos");  
+        delay(4000);
+        MsTimer2::start();
+
+    }
+    else{
+        Serial.println(" Clave incorrecta");
+        Serial.println(" Ingrese clave correcta");
+         }
+ }
+}
+}
+
+
+
+void activacion(){
+  switch(on){
+    case 0:
+    Serial.println("Ingrese clave");
+    on++;
+    break;   
+  }
+}
+void encender(){
+  if(on==1){
+        if(cont<20){
+            cont++;
+            switch(cont){
+              case 1:
+                digitalWrite(led1,HIGH);
+                digitalWrite(led3,HIGH);
+                digitalWrite(led2,HIGH);
+                lcd.setCursor(0,1);
+                lcd.println("Sistema activado");
+              break;
+              case 2:
+                digitalWrite(led1,HIGH);
+                digitalWrite(led2,LOW);
+                digitalWrite(led3,LOW);
+              break;
+              case 3:
+                digitalWrite(led1,LOW);
+                digitalWrite(led2,LOW);
+                digitalWrite(led3,HIGH);
+              break;
+              case 4:
+                digitalWrite(led1,HIGH);
+                digitalWrite(led2,HIGH);
+                digitalWrite(led3,LOW);
+              break;
+             case 5  :
+                digitalWrite(led1,HIGH);
+                digitalWrite(led2,LOW);
+                digitalWrite(led3,HIGH);
+              break;
+              case 6:
+                digitalWrite(led1,LOW);
+                digitalWrite(led2,HIGH);
+                digitalWrite(led3,LOW);
+              break;
+            }
+    }
+    }
+    
+}
+  
+void reloj(){
+  minutos++;
+  if(minutos<60){
+    if(minutos<10){
+      lcd.setCursor(0,0);
+      lcd.print("hora");
+      lcd.setCursor(8,0);
+      lcd.print(String("0")+String(minutos));
+    }else{
+      lcd.setCursor(8,0);
+      lcd.print(minutos);
+    }
+  }
+  if(minutos==60){
+      hora++;
+      minutos=0;
+      lcd.setCursor(8,0);
+      lcd.print("00");  
+  }
+  if(hora<10){
+      lcd.setCursor(5,0);
+      lcd.print(String("0")+String(hora)+String(":"));
+  }else{
+    lcd.setCursor(5,0);
+    lcd.print(String(hora)+String(":"));
+  }
+  if(hora==24){
+    hora=0;
+  }
+ 
+   if(millis()>tiempo+periodo){
+    tiempo=millis();
+    Serial.println("");
+    Serial.println("Salvo");
+    lcd.setCursor(11,0);
+    lcd.println("Salvo");
+    int minu=minutos/4;
+    int ho=hora/4;
+    EEPROM.write(0,minutos);
+    EEPROM.write(2,hora);
+  }
+}
