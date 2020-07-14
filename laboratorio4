@@ -1,4 +1,3 @@
-
 /*
  * LABORATORIO 4: SISTEMA DE SEGURIDAD DOMICILIARIA
  * COLIMBA POZO GEOVANA ELIZABETH
@@ -18,10 +17,11 @@ const int led2=23;
 const int led3=24;
 const int sensor1=7;
 float modulo;
+int v=0,v2=0;
 const int sensor2=6;
 const int sensor3=5;
 unsigned long tiempo=0;
-int periodo=1100;
+int periodo=10100;
 int minu,rel;
 void setup() {
   lcd.begin(16,2);
@@ -33,8 +33,8 @@ void setup() {
   pinMode(sensor2,OUTPUT);
   pinMode(sensor3,OUTPUT);
   
-  EEPROM.write(0,0);
-  EEPROM.write(1,0);
+  //EEPROM.write(0,0);
+  //EEPROM.write(1,0);
   minutos=EEPROM.read(0);
   hora=EEPROM.read(1);
   Timer1.initialize(1000000);//1seg
@@ -80,6 +80,7 @@ void activacion(){
 }
 void encender(){
   if(on==1){
+    
         if(cont<20){
             cont++;
             switch(cont){
@@ -87,6 +88,7 @@ void encender(){
                 digitalWrite(led1,HIGH);
                 digitalWrite(led3,HIGH);
                 digitalWrite(led2,HIGH);
+                lcd.clear();
                 lcd.setCursor(0,1);
                 lcd.println("Sistema activado");
               break;
@@ -94,21 +96,35 @@ void encender(){
                 digitalWrite(led1,HIGH);
                 digitalWrite(led2,LOW);
                 digitalWrite(led3,LOW);
+                lcd.clear();
+                lcd.setCursor(0,1);
+                lcd.println("Movimiento detectado");
+                
               break;
               case 3:
-                digitalWrite(led1,LOW);
-                digitalWrite(led2,LOW);
-                digitalWrite(led3,HIGH);
+              v = digitalRead(sensor1);
+                if(v==HIGH){
+                    lcd.clear();
+                    lcd.setCursor(0,1);
+                    lcd.print("Movimiento Detectado");
+
+                  }
               break;
               case 4:
                 digitalWrite(led1,HIGH);
                 digitalWrite(led2,HIGH);
                 digitalWrite(led3,LOW);
+                lcd.clear();
+                lcd.setCursor(0,1);
+                lcd.println("Sistema activado");
               break;
              case 5  :
-                digitalWrite(led1,HIGH);
-                digitalWrite(led2,LOW);
-                digitalWrite(led3,HIGH);
+             v2 = digitalRead(sensor2);
+                if(v2==HIGH){
+                    lcd.clear();
+                    lcd.setCursor(0,1);
+                    lcd.print("Movimiento Detectado");
+                }
               break;
               case 6:
                 digitalWrite(led1,LOW);
@@ -160,6 +176,7 @@ void reloj(){
     int minu=minutos/4;
     int ho=hora/4;
     EEPROM.write(0,minutos);
-    EEPROM.write(2,hora);
+    EEPROM.write(1,hora);
   }
 }
+
