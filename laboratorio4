@@ -21,7 +21,7 @@ int v=0,v2=0;
 const int sensor2=6;
 const int sensor3=5;
 unsigned long tiempo=0;
-int periodo=10100;
+int periodo=14000;
 int minu,rel;
 void setup() {
   lcd.begin(16,2);
