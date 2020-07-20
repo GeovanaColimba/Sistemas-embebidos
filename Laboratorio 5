@@ -1,0 +1,236 @@
+import ddf.minim.*;
+Minim minim;
+AudioPlayer player;
+boolean display_image=false;
+boolean display_text=false;
+boolean display_score=false;
+int score=0;
+int highScore = 0;
+String[] obstaculos = {"pla.png","fla.png","bobmalo.png"};
+int sm = 200;
+PImage crus,pi,medusa,btinicio, btcomoju,fondo,btatras,cangrebu,casacalam,casaaren; //h
+int em = 300;
+int vm = 15;
+int vx = 20;
+int tO = 70;
+bob bobesponja;
+int i,j,k;
+Ob[] O1;
+Ob[] O2;
+Ob[] O3;
+int[] nuevaVel = new int[3];
+int[] nuevaX = new int[3];
+void setup(){
+ size(650,600);
+ minim=new Minim(this);
+ player=minim.loadFile("Island_Fever.wav");
+ //Inicializa 6 carros por carril
+ O1 = new Ob[6];
+ O2 = new Ob[6];
+ O3 = new Ob[6];
+ obs(O1, 195, true);
+ obs(O2, 315, false);
+ obs(O3, 465, true);
+ bobesponja = new bob(200, 550, 50, "esponja.png");
+
+}
+void draw() {
+ background(#99CCFF);
+ bobesponja.cargar();
+ casa();
+ stroke(#999999);
+ strokeWeight (2);
+ line (0,170,700,170);
+ line (0,220,700,220);
+ line (0,345,700,345);
+ line (0,295,700,295);
+ line (0,465,700,465);
+ line (0,220,700,220);
+ casacalam=loadImage("casacala.png");
+ image(casacalam,50,380,80,80);
+ casaaren=loadImage("casaare.png");
+ image(casaaren,290,260,100,50);
+ pi=loadImage("pina.png");
+ image(pi,50,530,100,100);
+ medusa=loadImage("cangre.png");
+ image(medusa,450,250,25,25);
+ image(medusa,250,420,25,25);
+ image(medusa,138,195,25,25);
+ image(medusa,240,135,25,25);
+ btinicio=loadImage("bt4.png");
+ image(btinicio,100,30,170,40);
+ btcomoju=loadImage("btninicio.png");
+ image(btcomoju,530,560,110,40);
+ if(display_image==true){
+   instrucciones();
+ }
+ if(display_score==true){
+   score();
+ }
+ frameRate(100);
+ int l = 0;
+ while(l<O1.length){
+ O1[l].avanza();
+ O2[l].retrocede();
+ O3[l].avanza();
+ if(bobesponja.choca(O1[l])||bobesponja.choca(O2[l])||bobesponja.choca(O3[l])){
+ bobesponja.setImagen("bobtriste.png");
+ bobesponja.cargar();
+ }
+ if(O1[l].paso){
+ if(l==0){
+ if (O1[l].adelante){
+ nuevaVel[0] = int (random(vm,vx));
+ nuevaX[0] = 0;
+ }else{
+ nuevaVel[0] = int (random(-vx,-vm));
+ nuevaX[0] = width;
+ }
+ }
+ cambiar(O1[l], 0);
+ }
+ if(O2[l].paso){
+ if(l==0){
+ if (O2[l].adelante){
+ nuevaVel[1] = int (random(vm,vx));
+ nuevaX[1] = 0;
+ }else{
+ nuevaVel[1] = int (random(-vx,-vm));
+ nuevaX[1] = width;
+ }
+ }
+ cambiar(O2[l], 1);
+ }
+ if(O3[l].paso){
+ if(l==0){
+ if (O3[l].adelante){
+ nuevaVel[2] = int (random(vm,vx));
+ nuevaX[2] = 0;
+ }else{
+ nuevaVel[2] = int (random(-vx,-vm));
+ nuevaX[2] = width;
+ }
+ }
+ cambiar(O3[l], 2);
+ }
+ l++;
+ }
+}
+void obs(Ob[] autos, int y, boolean adelante){
+ k=0;
+ int vel = 0;
+ float espacio1 = 0;
+ float espacio2 = 0;
+ int nux = 0;
+ if (adelante){
+ vel = int (random(vm,vx));
+ espacio1 = em*-1;
+ espacio2 = sm*-1;
+ nux = 0;
+ }else{
+ vel = int (random(-vx,-vm));
+ espacio1 = sm;
+ espacio2 = em;
+ nux = width;
+ }
+ int ima = int(random(0,obstaculos.length));
+ while(k<autos.length){
+ autos[k]=new Ob(nux,y,vel,tO,obstaculos[ima],adelante);
+ nux = nux + int(random (espacio1, espacio2));
+ ima = int(random(0,obstaculos.length));
+ k++;
+ }
+}
+
+void casa(){
+ crus=loadImage("crustaceo.png");
+ image(crus,580,62,130,130);
+}
+void cambiar(Ob car, int lug){
+ if (car.adelante){
+ nuevaX[lug] = nuevaX[lug] + int(random (em*-1, sm*-1));
+ }else{
+ nuevaX[lug] = nuevaX[lug] + int(random (sm, em));
+ }
+ car.cambio(nuevaX[lug],nuevaVel[lug],obstaculos[int(random(0,obstaculos.length))]);
+ car.paso = false;
+}
+void instrucciones(){
+          //the text below...
+          textSize(15);
+          noStroke();
+          fill(#0000CC);
+          text("DERECHA - 'D'", 200, 30);
+          text("IZQUIERDA - 'A'", 200, 50);
+          text("ARRIBA - 'W'", 200, 70);
+          text("ABAJO - 'S'", 200, 90); 
+}
+void mousePressed(){
+     if(mouseX>30 && mouseY>20 && mouseY<70 && mouseX<100){
+       if(mousePressed==true){
+         display_image=true;
+       }
+     }if((mouseX>450 && mouseY>230 && mouseY<300 && mouseX<470 )|| (mouseX>250 && mouseY>400 && mouseY<470 && mouseX<270)){
+          if(mousePressed==true){
+            //display_text=true;
+            display_score=true;
+            score++;} } }
+     
+void score(){
+  fill(#000000);
+  text("score: "+score,100,80); 
+  
+}
+void keyPressed( ){
+ player.play();
+ if(!bobesponja.murio){
+ //Si presionamos w
+ if(key=='w'||key=='W'){
+ if(bobesponja.getPosy() > 0){
+ bobesponja.setPosy(bobesponja.getPosy() - 25);
+ }
+ }else if(key=='s'||key=='S'){
+ if(bobesponja.getPosy() < height){
+ bobesponja.setPosy(bobesponja.getPosy() + 25);
+ }
+ }else if(key=='a'||key=='A'){
+ if(bobesponja.getPosx() > 0){
+ bobesponja.setPosx(bobesponja.getPosx() - 25);
+ }
+ }else if(key=='d'||key=='D'){
+ if(bobesponja.getPosx() < width){
+ bobesponja.setPosx(bobesponja.getPosx() + 25);
+ }}}}
+class Ob{
+ private int posx;
+ private int posy;
+ private int velocidad;
+ private int tamano;
+ private String imagen;
+ boolean adelante;
+ boolean paso=false;
+ 
+ Ob(int px, int py, int ve, int ta, String im, boolean adel) {
+ posx = px;
+ posy = py;
+ velocidad = ve;
+ tamano = ta;
+ imagen = im;
+ adelante = adel;
+ }
+ 
+ void setPosx(int x){posx=x;}
+ void setPosy(int y){posy=y;}
+ int getPosx(){return posx;}
+ int getPosy(){return posy;}
+ int getTam(){return tamano;} 
+ void avanza () {
+ PImage b = loadImage(imagen);
+ imageMode(CENTER);
+ image(b,posx,posy,tamano,tamano/2);
+ posx = posx + velocidad;
+ if (posx > width+tamano) {
+ posx = -tamano;
+ paso = true;
+ }
+ }
