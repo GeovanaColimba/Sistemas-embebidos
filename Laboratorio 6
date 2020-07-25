@@ -1,53 +1,109 @@
 # Sistemas-embebidos
 #include "datos.h" 
-float test[10][5]={{6.7,3.1,5.6,2.4,3},{6.9,3.1,5.1,2.3,3},{5.8,2.7,5.1,1.9,3},{6.8,3.2,5.9,2.3,3},{6.7,3.3,5.7,2.5,3},
-{6.7,3,5.2,2.3,3},{6.3,2.5,5,1.9,3},{6.5,3,5.2,2,3},{6.2,3.4,5.4,2.3,3},{5.9,3,5.1,1.8,3}};
-float dis[90]={4.87,5.10,4.81,6.24,5.75,5.10,4.88,4.94,4.80,4.61,2.18,1.55,1.46,1.65,1.87,2.09,1.61,1.28,1.34,1.37,1.35,1.24,1.45,1.61,1.37,1.25,1.28,1.24,1.43,1.28,2.60,3.39,3.83,4.27,3.26,4.22,4.05,3.55,4.40,3.47,2.84,1.73,1.72,1.33,1.57,1.26,1.69,1.97,1.58,1.33,1.90,1.61,1.73,1.44,1.59,1.47,1.26,1.56,1.39,1.33,2.34,2.57,2.65,1.72,1.76,1.76,1.59,3.45,4.11,2.34,1.72,1.59,1.97,1.56,1.75,1.77,1.55,2.85,2.51,2.29,1.74,3.21,2.48,1.62,1.72,1.51,1.70,1.47,1.55,1.43};
+#include "datos.h" //llamar a los datos para crear el modelo 
+float test[10][5]={
+{6.7,3.1,5.6,2.4,3},
+{6.9,3.1,5.1,2.3,3},
+{5.5,2.6,4.4,1.2,2},
+{5.6,2.7,4.2,1.3,2},
+{4.8,3,1.4,0.3,1},
+{6.7,3,5.2,2.3,3},
+{4.5,2.3,1.3,0.3,1},    //10 datos de prueba
+{5.1,3.8,1.9,0.4,1},
+{6.2,2.9,4.3,1.3,2},
+{5.9,3,5.1,1.8,3}};
+//float test[5]={6.7,3.1,5.6,2.4,3};
+//float test[5]={6.2, 2.9, 4.3, 1.3, 2};
+
 int fil=0;
 int col=0;
+float testt[5]; //indicar tamaño y tipo del vector 
 float distancia;
 float distancia_menor=20000;
 float etiqueta;
-float valor;
-String k;
+String valor;
+int k;
 float temp=0;
-int i,j;
-void setup() {
+float dis[90];
+int i,j,y;
+float r=0;
+
+int cont=1;
+
+void setup(){
   Serial.begin(9600);
   for(;fil<90;fil++){
     for(col=0;col<4;col++){
-      //distancia
-      distancia=distancia+pow(matriz[fil][col]-test[fil][col],2);
+      distancia=distancia +pow(matriz[fil][col]-test[7][col],2);
     }
-      distancia=sqrt(distancia);
-      //Serial.println(distancia);   
-}
-        for (i=1;i<90;i++)
+    distancia=sqrt(distancia);
+    dis[fil]=distancia;
+    //Serial.println(dis[fil]);
+    if(distancia<distancia_menor){
+      distancia_menor=distancia;
+      etiqueta=matriz[fil][4];
+    }
+  }
+       for (i=1;i<90;i++)
         {
           for (j=0;j<90-1;j++)
           {
             if (dis[j] > dis[j+1])   //condicion
             {
-              temp = dis[j];   //temp guarda momentaneamente el valor de lista[j]
-              dis[j]=dis[j+1];  //Asigno al la posicion lista[j], lo que hay en lista[j+1]
+              temp = dis[j];   //temp guarda momentaneamente el valor de dis[j]
+              dis[j]=dis[j+1];  //Asigno al la posicion dis[j], lo que hay en dis[j+1]
               dis[j+1]=temp;  //obtendra un nuevo valor por parte de temp.
             }
           }
         }
-        //Serial.println("Ingrese el valor de k");
-        //if(Serial.available()>0){
-         // k=Serial.readString();  
-         // valor = k.toFloat();
-          for(i=0;i<90;i++){
-          Serial.println(dis[i]);
-
-        
-        
-
-        }
-        }
-
-void loop(){
-  
-  
+        /*Serial.println("datos ordenados");
+        for(i=0;i<90;i++){
+        Serial.println(dis[i]);
+        }*/
+   Serial.println("----------------------------"); 
+   Serial.println("Conjunto de datos de prueba"); 
+   Serial.println("----------------------------"); 
+   for (int i = 0; i < 5; i = i + 1) {
+    Serial.print(test[7][i]);
+    Serial.print(' ');
+    } 
+    Serial.println(" ");
+    Serial.println("----------------------------");  
+    Serial.println("Ingrese el valor de vecinos");
+      
 }
+void loop(){
+   if(Serial.available()>0){
+    valor=Serial.readString();
+    k=valor.toInt();
+    float vecino[k];
+    if(k>0){
+      for(int a=0;a<k;a++){
+        vecino[a]=dis[a];
+      } 
+        Serial.println("-----------------------------------------------");  
+        Serial.println("Los " + String(k) + " vecinos mas cercanos son:");
+        Serial.println("-----------------------------------------------");
+        for (int a = 0; a < k; a = a + 1) {
+        Serial.print(vecino[a]);
+        Serial.print(' ');
+     } 
+    Serial.println(" ");
+    if(etiqueta==test[7][4]){
+        Serial.println("-----------------------------------------------");
+      Serial.println(String("Los datos ingresadon son de etiqueta ")+etiqueta);
+      Serial.println(" ");
+      Serial.println("///////////////////////////////////////////////////// ");
+      Serial.println("                       Acierto!               ");
+      Serial.println("///////////////////////////////////////////////////// ");
+      
+      r=10;
+    }else{
+      Serial.println("Error");
+      }
+      r=(r/10)*100;
+      Serial.println(" ");
+      Serial.print(String("Rendimiento del sistema: ")+String(r)+"%");
+     }
+   }
+  } 
