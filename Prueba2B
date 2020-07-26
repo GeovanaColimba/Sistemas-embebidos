@@ -1,0 +1,272 @@
+# Sistemas-embebidos
+#include "data.h"
+int fil=0;
+int col=0;
+float suma1=0;
+float suma2=0;
+float suma3=0;
+float suma4=0;
+float promedio1[3];
+float promedio2[3];
+float promedio3[3];
+float promedio4[3];
+float distancia1;
+float distancia2;
+float distancia3;
+float distancia4;
+float dis1[40];
+float dis2[40];
+float dis3[40];
+float dis4[40];
+float mayor1=dis1[0];
+float mayor2=dis2[0];
+float mayor3=dis3[0];
+float mayor4=dis4[0];
+float divi1;
+float divi2;
+float divi3;
+float divi4;
+float d1[40];
+float d2[40];
+float d3[40];
+float d4[40];
+float m1[12];
+float m2[40];
+float m3[40];
+float m4[40];
+
+int i,j;
+void setup() {
+  Serial.begin(9600);
+  for(col=0;col<3;col++){
+    suma1=0;
+    for(fil=0;fil<40;fil++){
+      suma1=suma1+matriz[fil][col];
+    }
+    promedio1[col]=suma1/40;
+  }
+   Serial.println("PROMEDIOS VALORES NETIQUETA 1");
+   Serial.println("-----------------------------------");
+  for(i=0;i<3;i++){
+        Serial.print(promedio1[i]);
+        Serial.print(' ');
+    }
+   Serial.println(" ");
+   Serial.println("-----------------------------------");
+   
+   for(col=0;col<3;col++){
+    suma2=0;
+    for(fil=40;fil<79;fil++){
+      suma2=suma2+matriz[fil][col];
+      }
+      promedio2[col]=suma2/39;
+  }
+    Serial.println("PROMEDIOS VALORES NETIQUETA 2");
+    Serial.println("-----------------------------------");
+  for(i=0;i<3;i++){
+    Serial.print(promedio2[i]);
+    Serial.print(' ');
+ 
+  }
+    Serial.println(" ");
+    Serial.println("-----------------------------------");
+    for(col=0;col<3;col++){
+        suma3=0;
+        for(fil=79;fil<118;fil++){
+          suma3=suma3+matriz[fil][col];
+          }
+          promedio3[col]=suma3/39; 
+          
+      }
+    Serial.println("PROMEDIOS VALORES NETIQUETA 2");
+    Serial.println("-----------------------------------");
+    for(i=0;i<3;i++){
+        Serial.print(promedio3[i]); 
+        Serial.print(' ');
+    }
+    Serial.println(" ");
+    Serial.println("-----------------------------------");
+    for(col=0;col<3;col++){
+        suma4=0;
+        for(fil=118;fil<157;fil++){
+          suma4=suma4+matriz[fil][col];
+          }
+          promedio4[col]=suma4/39;
+      }
+    Serial.println("PROMEDIOS VALORES NETIQUETA 4");
+    Serial.println("-----------------------------------");
+      for(i=0;i<3;i++){
+        Serial.print(promedio4[i]);
+        Serial.print(' '); 
+    }
+    Serial.println(" ");
+    Serial.println("-----------------------------------");
+    Serial.println("DISTANCIA NETIQUETA 1");
+    Serial.println("-----------------------------------");
+    Serial.println(" ");
+  
+  for(fil=0;fil<40;fil++){
+       for(col=0;col<3;col++){
+          distancia1=pow(matriz[fil][0]-promedio1[0],2)+pow(matriz[fil][1]-promedio1[1],2)+pow(matriz[fil][2]-promedio1[2],2);
+    }
+      distancia1=sqrt(distancia1);
+      dis1[fil]=distancia1;       
+      Serial.println(dis1[fil]);
+      Serial.println(" ");
+  }
+  Serial.println("-----------------------------------");
+  Serial.println("VALOR MAXIMO DISTANCIA NETIQUETA 1");
+  Serial.println("-----------------------------------");
+  for(fil=0;fil<40;fil++){
+          if(dis1[fil]>mayor1){
+          mayor1=dis1[fil];
+    }
+  }
+  Serial.println(mayor1);
+
+  Serial.println("-----------------------------------");
+  Serial.println("VALORES DISTANCIA NETIQUETA 1/VALOR MAXIMO 1");
+  Serial.println("-----------------------------------");
+  for(fil=0;fil<40;fil++){
+       for(col=0;col<1;col++){
+          divi1=dis1[fil]/mayor1;
+          
+    } d1[fil]=divi1;    
+      Serial.println(d1[fil]);
+      Serial.println(" ");
+  }
+  Serial.println("-----------------------------------");
+  Serial.println("VALORES ENTRE RANGO 0.4 Y 0.65");
+  Serial.println("-----------------------------------");
+  for(fil=0;fil<40;fil++){
+       for(col=0;col<1;col++){
+        if(d1[fil]>0.4 && d1[fil]<0.65){
+           d1[fil]=d1[fil];
+        }
+        else{
+          d1[fil]=0;
+        }
+        
+    }
+      
+      
+  }
+  Serial.println(d1[fil]);
+  
+
+
+
+
+  
+  Serial.println("-----------------------------------");
+  Serial.println("DISTANCIA NETIQUETA 2");
+  Serial.println("-----------------------------------");
+  Serial.println(" ");
+    for(fil=40;fil<79;fil++){
+       for(col=0;col<3;col++){
+          distancia2=pow(matriz[fil][0]-promedio2[0],2)+pow(matriz[fil][1]-promedio2[1],2)+pow(matriz[fil][2]-promedio2[2],2);
+    }
+      distancia2=sqrt(distancia2);
+      dis2[fil]=distancia2;       
+      Serial.println(dis2[fil]);
+      Serial.println(" ");
+  }
+  Serial.println("-----------------------------------");
+  Serial.println("VALOR MAXIMO DISTANCIA NETIQUETA 2");
+  Serial.println("-----------------------------------");
+  for(fil=40;fil<79;fil++){
+          if(dis2[fil]>mayor2){
+          mayor2=dis2[fil];
+
+     
+    }
+  }
+  Serial.println(mayor2);
+  Serial.println("-----------------------------------");
+  Serial.println("VALORES DISTANCIA NETIQUETA 2/VALOR MAXIMO 2");
+  Serial.println("-----------------------------------");
+  for(fil=40;fil<79;fil++){
+       for(col=0;col<1;col++){
+          divi2=dis2[fil]/mayor2;
+          
+    } d2[fil]=divi2;    
+      Serial.println(d2[fil]);
+      Serial.println(" ");
+  }
+  Serial.println("-----------------------------------");
+  Serial.println("DISTANCIA NETIQUETA 3");
+  Serial.println("-----------------------------------");
+  Serial.println(" ");
+    for(fil=79;fil<118;fil++){
+       for(col=0;col<3;col++){
+          distancia3=pow(matriz[fil][0]-promedio3[0],2)+pow(matriz[fil][1]-promedio3[1],2)+pow(matriz[fil][2]-promedio3[2],2);
+    }
+      distancia3=sqrt(distancia3);
+      dis3[fil]=distancia3;       
+      Serial.println(dis3[fil]);
+      Serial.println(" ");
+  }
+  Serial.println("-----------------------------------");
+  Serial.println("VALOR MAXIMO DISTANCIA NETIQUETA 3 ");
+  Serial.println("-----------------------------------");
+  for(fil=79;fil<118;fil++){
+          if(dis3[fil]>mayor3){
+          mayor3=dis3[fil];
+
+     
+    }
+  }
+  Serial.println(mayor3);
+  Serial.println("-----------------------------------");
+  Serial.println("VALORES DISTANCIA NETIQUETA 3/VALOR MAXIMO 3");
+  Serial.println("-----------------------------------");
+  for(fil=79;fil<118;fil++){
+       for(col=0;col<1;col++){
+          divi3=dis3[fil]/mayor3;
+          
+    } d3[fil]=divi3;    
+      Serial.println(d3[fil]);
+      Serial.println(" ");
+  }
+  Serial.println(" ");
+  Serial.println("-----------------------------------");
+  Serial.println("DISTANCIA NETIQUETA 4");
+  Serial.println("-----------------------------------");
+  Serial.println(" ");
+    for(fil=118;fil<157;fil++){
+       for(col=0;col<3;col++){
+          distancia4=pow(matriz[fil][0]-promedio4[0],2)+pow(matriz[fil][1]-promedio4[1],2)+pow(matriz[fil][2]-promedio4[2],2);
+    }
+      distancia4=sqrt(distancia4);
+      dis4[fil]=distancia4;       
+      Serial.println(dis4[fil]);
+      Serial.println(" ");
+  }
+  Serial.println("-----------------------------------");
+  Serial.println("VALOR MAXIMO DISTANCIA NETIQUETA 4");
+  Serial.println("-----------------------------------");
+  for(fil=118;fil<157;fil++){
+          if(dis4[fil]>mayor4){
+          mayor4=dis4[fil];
+    }
+  }
+  Serial.println(mayor4);
+  Serial.println("-----------------------------------");
+  Serial.println("VALORES DISTANCIA NETIQUETA 4/VALOR MAXIMO 4");
+  Serial.println("-----------------------------------");
+  for(fil=118;fil<157;fil++){
+       for(col=0;col<1;col++){
+          divi4=dis4[fil]/mayor4;
+          
+    } d4[fil]=divi4;    
+      Serial.println(d4[fil]);
+      Serial.println(" ");
+  }
+ 
+}
+  
+
+void loop() {
+  
+
+}
