@@ -41,6 +41,7 @@ float distancia;
 float d_m=20000;
 float etiqueta;
 int i,j;
+int c=0;
 /////datos de prueba//////
 /*float test[8][4]={
 {16516,8780,964,4},
@@ -155,20 +156,16 @@ void setup() {
   Serial.println("-----------------------------------");
   Serial.println("VALORES ENTRE RANGO 0.4 Y 0.65 de etiqueta 1");
   Serial.println("-----------------------------------");
- 
-  for(fil=0;fil<40;fil++){
-         for(col=0;col<4;col++){
-           if(d1[fil]>0.4 && d1[fil]<0.65){
+    for(fil=0;fil<40;fil++){       
+          for(col=0;col<4;col++){
+            if(d1[fil]>0.4 && d1[fil]<0.65){
             m1[fil][col]=matriz[fil][col]; 
             datos[fil][col]=m1[fil][col];
-            Serial.println(datos[fil][col]);
+            Serial.println(datos[fil][col]);   
+          } 
     }
-    
-   }
-   
   }
-
-
+ 
 
   Serial.println("-----------------------------------");
   Serial.println("DISTANCIA ETIQUETA 2");
@@ -209,8 +206,8 @@ void setup() {
   Serial.println("VALORES ENTRE RANGO 0.4 Y 0.65 de etiqueta 2");
   Serial.println("-----------------------------------");
   for(fil=40;fil<79;fil++){
-        if(d2[fil]>0.4 && d2[fil]<0.65){
           for(col=0;col<4;col++){
+            if(d2[fil]>0.4 && d2[fil]<0.65){
             m2[fil][col]=matriz[fil][col]; 
             datos[fil][col]=m2[fil][col];
             Serial.println(datos[fil][col]);      
@@ -236,8 +233,6 @@ void setup() {
   for(fil=79;fil<118;fil++){
           if(dis3[fil]>mayor3){
           mayor3=dis3[fil];
-
-     
     }
   }
   Serial.println(mayor3);
@@ -302,13 +297,20 @@ void setup() {
   Serial.println("VALORES ENTRE RANGO 0.4 Y 0.65 de etiqueta 4");
   Serial.println("-----------------------------------");
   for(fil=118;fil<157;fil++){
+       if(d4[fil]>0.4 && d4[fil]<0.65){
           for(col=0;col<4;col++){
-            if(d4[fil]>0.4 && d4[fil]<0.65){
             m4[fil][col]=matriz[fil][col]; 
             datos[fil][col]=m4[fil][col];
             Serial.println(datos[fil][col]);       
           } 
     } 
+  }
+ for (fil = 0; fil < 48; fil++) {
+    for (col = 0; col < 4; col++) {
+      Serial.print(datos[fil][col]);
+      Serial.print(" ");
+    }
+    Serial.println("");
   }
  Serial.println(" ");
  Serial.println("--------------KNN---------------"); 
